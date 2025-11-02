@@ -1,4 +1,4 @@
-// ✅ FoodieHub Backend - Final Version (Connected to MongoDB Atlas)
+// ✅ FoodieHub Backend - Final Version (Connected to MongoDB Atlas + Frontend Link)
 
 require("dotenv").config();
 const express = require("express");
@@ -10,7 +10,13 @@ const jwt = require("jsonwebtoken");
 const app = express();
 
 // ✅ Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://foodiehub-frontend-9z90.onrender.com", // ✅ Allow only your frontend
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 // ✅ MongoDB Connection (Atlas)
@@ -111,7 +117,9 @@ app.post("/api/login", async (req, res) => {
     if (!isMatch)
       return res.status(400).json({ success: false, message: "Invalid credentials" });
 
-    const token = jwt.sign({ id: user._id }, "secretkey", { expiresIn: "2h" });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || "secretkey", {
+      expiresIn: "2h",
+    });
 
     res.json({
       success: true,
