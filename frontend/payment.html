@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment - FoodieHub</title>
+  <link rel="stylesheet" href="payment.css" />
+</head>
+
+<body>
+  <!-- ---------- HEADER ---------- -->
+  <header>
+    <h1>FoodieHub</h1>
+    <nav>
+      <ul>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="order.html">Order</a></li>
+        <li><a href="payment.html" class="active">Payment</a></li>
+        <li><a href="contact.html">Contact</a></li>
+
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ---------- PAYMENT SECTION ---------- -->
+  <section class="payment">
+    <div class="payment-content">
+      <h2>Complete Your Payment</h2>
+      <p>For any help, contact our restaurant directly.</p>
+
+      <div class="upi-details">
+        <p><strong>📞 Restaurant Contact:</strong> +91 98765 43210</p>
+        <p><strong>Hours:</strong> 10:00 AM – 10:00 PM</p>
+      </div>
+
+      <form id="paymentForm">
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" placeholder="Enter your name" required /><br><br>
+
+        <label for="phone">Your Phone Number:</label>
+        <input type="tel" id="phone" placeholder="Enter your phone number" required /><br><br>
+
+        <label for="method">Select Payment Method:</label>
+        <select id="method" required>
+          <option value="">-- Choose Method --</option>
+          <option value="UPI">UPI</option>
+          <option value="Credit Card">Credit Card</option>
+          <option value="Debit Card">Debit Card</option>
+          <option value="Cash on Delivery">Cash on Delivery</option>
+        </select><br><br>
+
+        <button type="submit" class="btn">Pay Now</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ---------- SUCCESS MODAL ---------- -->
+  <div id="successModal" class="custom-modal" style="display:none;">
+    <div class="custom-modal-content">
+      <p>✅ Payment Successful! Thank you for your order.</p>
+      <button id="okBtn">OK</button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("paymentForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const method = document.getElementById("method").value;
+
+      if (!name || !phone || !method) {
+        alert("⚠️ Please fill in all details.");
+        return;
+      }
+
+      const paymentData = { name, phone, method };
+
+      try {
+        const res = await fetch("https://foodiehub-backend-j0kb.onrender.com/api/payment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(paymentData),
+        });
+
+        const result = await res.json();
+
+        if (res.ok && result.success) {
+          document.getElementById("successModal").style.display = "flex";
+        } else {
+          alert("❌ Payment failed. Try again later.");
+        }
+      } catch (error) {
+        alert("Failed to connect to server. Please check backend.");
+      }
+    });
+
+    document.getElementById("okBtn").addEventListener("click", () => {
+      document.getElementById("successModal").style.display = "none";
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>

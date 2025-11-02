@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reservation - FoodieHub</title>
+  <link rel="stylesheet" href="reservation.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <h1>FoodieHub</h1>
+    <nav>
+      <ul>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="reservation.html" class="active">Reservation</a></li>
+        <li><a href="order.html">Order</a></li>
+        <li><a href="payment.html">Payment</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Reservation Section -->
+  <section class="reservation">
+    <div class="reservation-content">
+      <h2>Reserve a Table</h2>
+      <p>Book your table easily and enjoy a wonderful dining experience!</p>
+
+      <form id="reservationForm" class="reservation-form">
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required><br><br>
+
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required><br><br>
+
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required><br><br>
+
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required><br><br>
+
+        <label for="time">Time:</label>
+        <input type="time" id="time" name="time" required><br><br>
+
+        <label for="guests">Number of Guests:</label>
+        <input type="number" id="guests" name="guests" min="1" max="20" required><br><br>
+
+        <button type="submit" class="btn">Reserve Now</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 FoodieHub Project. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Reservation Script -->
+<script>
+  document.getElementById("reservationForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = {
+      name: document.getElementById("name").value.trim(),
+      email: document.getElementById("email").value.trim(),
+      phone: document.getElementById("phone").value.trim(),
+      date: document.getElementById("date").value,
+      time: document.getElementById("time").value,
+      guests: document.getElementById("guests").value
+    };
+
+    try {
+      // ✅ make sure the API URL matches your backend route exactly
+      const response = await fetch("https://foodiehub-backend-j0kb.onrender.com/api/reservation", {
+
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert("✅ Reservation submitted successfully!");
+        document.getElementById("reservationForm").reset();
+      } else {
+        alert("❌ Error: " + (result.message || "Failed to submit reservation."));
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("⚠️ Failed to connect to the server. Please check if backend is running.");
+    }
+  });
+</script>

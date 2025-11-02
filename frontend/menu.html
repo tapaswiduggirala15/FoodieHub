@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu - FoodieHub</title>
+  <link rel="stylesheet" href="menu.css">
+</head>
+<body>
+  <header>  
+    <nav>
+      <h1 class="logo">FoodieHub</h1>
+      <ul>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="reservation.html">Reservation</a></li>
+        <li><a href="order.html">Order</a></li>
+        <li><a href="payment.html">Payment</a></li>
+        <li><a href="contact.html">Contact</a></li>
+
+      </ul>
+    </nav>
+  </header>
+
+  <section class="menu">
+    <h2>Our Menu</h2>
+    <div class="menu-items" id="menu-container">
+      <!-- Menu will be loaded by JS -->
+    </div>
+  </section>
+
+  <footer>  
+    <p>&copy; 2025 FoodieHub. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    const menuItems = [
+      { name: "Salad Bowl", price: 12.99, img: "https://tse4.mm.bing.net/th/id/OIP.Y_xnuhw6wyh2yNicvqz8gwHaEK?pid=Api&P=0&h=220" },
+      { name: "Veggie Pizza", price: 8.99, img: "https://tse3.mm.bing.net/th/id/OIP.jB5wYDrBStyJY8l3i8hK4AHaEJ?pid=Api&P=0&h=220" },
+      { name: "Chocolate Cake", price: 6.50, img: "https://tse3.mm.bing.net/th/id/OIP.GT2yfyGaGEgEhvkWBU30JgHaEj?pid=Api&P=0&h=220" },
+      { name: "Chicken Cheese Burger", price: 15.99, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsMpCzd5Z0KLVMvUmtDKbvt1lSaTPHb7VXwzKehznO1uGPhc9MxTT6sEoK6V-3apdw-Q9kMg&s height=500 width=100%" },
+      { name: "Salmon Plate", price: 22.95, img: "https://tse2.mm.bing.net/th/id/OIP.maQpFJiRuDMauaTZ3N7KiQHaEo?pid=Api&P=0&h=220" },
+      { name: "Waffles", price: 11.99, img: "https://tse2.mm.bing.net/th/id/OIP.y_sg3oVULl0J6PySobGk-gHaEK?pid=Api&P=0&h=220" },
+      { name: "White Sauce Pasta", price: 31.99, img: "https://tse4.mm.bing.net/th/id/OIP.6pF7RLFY9RW2MY4L43sHfgHaF7?pid=Api&P=0&h=220" },
+      { name: "Mocktails", price: 21.99, img: "https://tse4.mm.bing.net/th/id/OIP.Ybb9WkdF-J3aRZ6Ys6z4kQHaHa?pid=Api&P=0&h=220" }
+    ];
+
+    const container = document.getElementById("menu-container");
+
+    menuItems.forEach(item => {
+      const dish = document.createElement("div");
+      dish.classList.add("dish");
+      dish.innerHTML = `
+        <img src="${item.img}" alt="${item.name}">
+        <h3>${item.name}</h3>
+        <p>$${item.price.toFixed(2)}</p>
+        <button class="add-to-cart" onclick='addToCart("${item.name}", ${item.price})'>Add to Cart</button>
+      `;
+      container.appendChild(dish);
+    });
+
+    // ✅ Add to Cart function
+    function addToCart(name, price) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.push({ name, price });
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert(`${name} added to cart!`);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+header {
+  background-color:black;
+  color: white;
+  padding: 15px 0;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+nav ul {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+nav ul li {
+  display: inline;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+  color: #ffe8e5;
+  border-bottom: 2px solid white;
+  padding-bottom: 3px;
+}
+.order {
+  min-height: 100vh;
+  background: url("https://wallpapers.com/images/hd/ordered-food-in-kitchen-restaurant-usk5o0dxl2n4qn3k.jpg") no-repeat center center/cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 80px 20px;
+}
+
+.order::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+.order-content {
+  background: rgba(255, 255, 255, 0.97);
+  padding: 35px;
+  border-radius: 12px;
+  max-width: 450px;
+  width: 100%;
+  text-align: center;
+  z-index: 2;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.order-content h2 {
+  color: #ff6f61;
+  margin-bottom: 10px;
+  font-size: 1.8rem;
+}
+
+.order-content p {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 1rem;
+}
+
+/* Order form styling */
+.order-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.order-form label {
+  text-align: left;
+  font-weight: bold;
+  color: #333;
+  margin-top: 5px;
+}
+
+.order-form input,
+.order-form select,
+.order-form textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.order-form textarea {
+  resize: none;
+}
+
+.btn {
+  margin-top: 10px;
+  background: #ff6f61;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: background 0.3s;
+}
+
+.btn:hover {
+  background: #ff4a3d;
+}
+
+.note {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #555;
+}
+/* centered modal used by restaurant.js */
+.custom-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.custom-modal-content {
+  background: #fff;
+  padding: 20px 26px;
+  border-radius: 10px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+  max-width: 420px;
+  width: calc(100% - 40px);
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.custom-modal-content p {
+  margin: 0 0 12px 0;
+}
+
+.custom-modal-content .custom-modal-ok {
+  background: #ff6600;
+  color: #fff;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}

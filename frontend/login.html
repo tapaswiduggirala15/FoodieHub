@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - FoodieHub</title>
+  <link rel="stylesheet" href="login.css" />
+</head>
+<body>
+  <header>
+    <h1>FoodieHub</h1>
+    <nav>
+      <ul>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="login.html" class="active">Login</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="reservation.html">Reservation</a></li>
+        <li><a href="order.html">Order</a></li>
+        <li><a href="payment.html">Payment</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        
+      </ul>
+    </nav>
+  </header>
+
+  <section class="auth">
+    <div class="auth-box">
+      <h2>Login to FoodieHub</h2>
+
+      <form id="loginForm">
+        <input type="email" id="email" placeholder="Enter your email" required />
+        <input type="password" id="password" placeholder="Enter your password" required />
+        <button type="submit" class="btn">Login</button>
+      </form>
+
+      <p class="message" id="loginMsg"></p>
+      <p>Don’t have an account? <a href="register.html">Register here</a></p>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 FoodieHub. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = {
+        email: document.getElementById("email").value.trim(),
+        password: document.getElementById("password").value.trim()
+      };
+
+      const msg = document.getElementById("loginMsg");
+      msg.style.color = "black";
+      msg.textContent = "⏳ Logging in...";
+
+      try {
+        const res = await fetch("https://foodiehub-backend-j0kb.onrender.com/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData)
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          msg.style.color = "green";
+          msg.textContent = "✅ Login successful! Redirecting...";
+          localStorage.setItem("token", data.token);
+          setTimeout(() => (window.location.href = "index.html"), 1500);
+        } else {
+          msg.style.color = "red";
+          msg.textContent = "❌ " + data.message;
+        }
+      } catch (err) {
+        msg.style.color = "red";
+        msg.textContent = "Server not reachable. Make sure backend is running.";
+      }
+    });
+  </script>
+</body>
+</html>
